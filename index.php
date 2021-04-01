@@ -29,10 +29,10 @@ echo '<br> Определение <br>
 // Существующие сервисы
 $twitter  = new TwitterService();
 $facebook = new FacebookService();
-
 // Сервис который адаптируем
 $instagramm = new InstagrammService();
 $adapterInstagramm = new AdapterInstagrammService($instagramm);
+
 
 // Создаем senders
 $twitterSender    = new SocialServiceClientClass($twitter);
@@ -43,7 +43,7 @@ $instagrammSender = new SocialServiceClientClass($adapterInstagramm);
 // Отправляем сообщения в сервисы
 echo $twitterSender->newMessageSender('maikl-dzion'     , '1234'     , 'Привет сообщество!Как жизнь?');       echo "<br>";
 echo $facebookSender->newMessageSender('fillip-maker'   , 'urty65756', 'Всем желаю доброго утра!!!');         echo "<br>";
-echo $instagrammSender->newMessageSender('swide@mail.ru', 'gfhdggd'  , 'Продаю платяной шкаф (антиквариат)'); echo "<br>";
+echo "[InstagrammService имеет нестандартный интерфейс]" . $instagrammSender->newMessageSender('swide@mail.ru', 'gfhdggd'  , 'Продаю платяной шкаф (антиквариат)'); echo "<br>";
 
 echo '<br> ------ Adapter Pattern end ----- <br>';
 
@@ -144,6 +144,27 @@ echo '<br> ------ Command Pattern end ----- <br><br>';
 
 
 
+//$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
+//$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
+
+echo '<h2> ----- Factory Pattern start ------- </h2>';
+
+echo '<br> Определение <br>
+      <br/>
+   
+      <br><br>';
+
+$truckerTransport = new TruckerLogisticFactory();
+$clientLogistic   = new FactoryLogisticClientCode($truckerTransport);
+echo "<br>" . implode("<br>", $clientLogistic->run());
+
+echo "<br><br>";
+
+$smallTransport = new SmallTransportLogisticFactory();
+$clientLogistic = new FactoryLogisticClientCode($smallTransport);
+echo "<br>" . implode("<br>", $clientLogistic->run());
+
+echo "<br> ------ Factory Pattern end ----- <br><br>";
 
 
 //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
