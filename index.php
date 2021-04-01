@@ -11,7 +11,6 @@ foreach ($files as $key => $filePath) {
 }
 
 
-
 //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 
@@ -165,6 +164,28 @@ $clientLogistic = new FactoryLogisticClientCode($smallTransport);
 echo "<br>" . implode("<br>", $clientLogistic->run());
 
 echo "<br> ------ Factory Pattern end ----- <br><br>";
+
+
+//$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
+//$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
+
+echo '<h2> ----- Strategy Pattern start ------- </h2>';
+
+echo '<br> Определение <br>
+
+          <br/>
+    
+      <br><br>';
+
+$smtpMail = new SmtpMailSender();
+$mailSender = new StrategySendMessageServiceClientCode($smtpMail);
+echo "<br>" .$mailSender->send('Привет,нужна помощь');
+
+$simpleMail = new SimpleMailSender();
+$mailSender = new StrategySendMessageServiceClientCode($simpleMail);
+echo "<br><br>" . $mailSender->send('Добрый день,передаю документы по почте');
+
+echo '<br><br> ------ Strategy Pattern end ----- <br><br>';
 
 
 //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$

@@ -1,0 +1,59 @@
+<?php
+
+interface SendMailInterface
+{
+    public function sendMail($message);  // --
+
+}
+
+// Исходные классы
+
+class SimpleMailSender implements SendMailInterface
+{
+    protected $driver = 'mail';
+
+    public function __construct() {
+    }
+
+    public function sendMail($message) {
+        $message = "Письмо отправлено <br> Содержание письма : " . $message;
+        return $this->getMessage($message);
+    }
+
+    protected function getMessage($message) {
+        $message = $this->driver . ": {$message}";
+        return $message;
+    }
+}
+
+class SmtpMailSender implements SendMailInterface
+{
+    protected $driver = 'smtp';
+
+    public function __construct() {
+    }
+
+    public function sendMail($message) {
+        $message = "Письмо отправлено <br> Содержание письма : " . $message;
+        return $this->getMessage($message);
+    }
+
+    protected function getMessage($message) {
+        $message = $this->driver . " : {$message}";
+        return $message;
+    }
+}
+
+// Клиентский код который запускает сервисы
+class StrategySendMessageServiceClientCode {
+
+    protected $service;
+
+    public function __construct(SendMailInterface $service) {
+        $this->service = $service;
+    }
+
+    public function send($message) {
+        return $this->service->sendMail($message);
+    }
+}
