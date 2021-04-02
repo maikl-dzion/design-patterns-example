@@ -142,30 +142,6 @@ echo $commandClientCode->undo(); echo "<br>";
 echo '<br> ------ Command Pattern end ----- <br><br>';
 
 
-
-//$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
-//$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
-
-echo '<h2> ----- Factory Pattern start ------- </h2>';
-
-echo '<br> Определение <br>
-      <br/>
-   
-      <br><br>';
-
-$truckerTransport = new TruckerLogisticFactory();
-$clientLogistic   = new FactoryLogisticClientCode($truckerTransport);
-echo "<br>" . implode("<br>", $clientLogistic->run());
-
-echo "<br><br>";
-
-$smallTransport = new SmallTransportLogisticFactory();
-$clientLogistic = new FactoryLogisticClientCode($smallTransport);
-echo "<br>" . implode("<br>", $clientLogistic->run());
-
-echo "<br> ------ Factory Pattern end ----- <br><br>";
-
-
 //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 
@@ -191,21 +167,48 @@ echo '<br><br> ------ Strategy Pattern end ----- <br><br>';
 //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 
-//echo '<br> ----- Decorator Pattern start ------- <br>';
-//
-//echo '<br> Определение <br>
-//
-//          <br/>
-//          <br/>
-//          <br/>
-//
-//      <br><br>';
-//
-//
-//
-//
-//
-//echo '<br> ------ Decorator Pattern end ----- <br>';
+echo '<h2> ----- FactoryMethod Pattern start ------- </h2>';
+
+echo '<br> Определение <br>
+      <br/>
+   
+      <br><br>';
+
+$truckerTransport = new TruckerLogisticFactoryMethod();
+$clientLogistic   = new FactoryLogisticClientCode($truckerTransport);
+echo "<br>" . implode("<br>", $clientLogistic->run());
+
+echo "<br><br>";
+
+$smallTransport = new SmallTransportLogisticFactoryMethod();
+$clientLogistic = new FactoryLogisticClientCode($smallTransport);
+echo "<br>" . implode("<br>", $clientLogistic->run());
+
+echo "<br> ------ FactoryMethod Pattern end ----- <br><br>";
+
+
+//$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
+//$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
+
+echo '<h2> ----- AbstractFactory Pattern start ------- </h2>';
+
+echo '<br> Определение <br>
+      <br/>
+   
+      <br><br>';
+
+$woodenHouseFactory = new WoodenHouseFactory();
+$houseBuild = new AbstarctFactoryClientCode($woodenHouseFactory);
+echo $houseBuild->run();
+echo "<br><br>";
+
+$brickHouseFactory = new BrickHouseFactory();
+$houseBuild = new AbstarctFactoryClientCode($brickHouseFactory);
+echo $houseBuild->run();
+echo "<br><br>";
+
+echo "<br> ------ AbstractFactory Pattern end ----- <br><br>";
+
 
 
 
