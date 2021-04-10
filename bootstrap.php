@@ -221,6 +221,34 @@ $designPatterns['factory-method'] = renderPattern(function($args) {
 
 
 
+$designPatterns['observer'] = renderPattern(function($args) {
+
+    echo headerPage('Observer (Start)');
+
+    echo '<br> Определение <br>
+          <br><br>';
+
+    $newUser = [
+        "username"  => "John Smith",
+        "email" => "john99@example.com",
+    ];
+
+    // Генератор новых событий
+    $userUpdated = new UserUpdatedSubject();
+
+    // Наблюдатели
+    $store       = new StoreDepartment();
+    $finance     = new FinancialDepartment();
+
+    $userUpdated->attach($store);
+    $userUpdated->attach($finance);
+
+    $userUpdated->create($newUser);
+
+    echo footerPage('Observer (End)');
+}, []);
+
+
 //$designPatterns['decorator'] = renderPattern(function($args) {
 //
 //    echo headerPage('Decorator (Start)');

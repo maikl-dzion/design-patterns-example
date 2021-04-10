@@ -6,7 +6,7 @@ define('SITE_URI', '/' . $uri[1] . '/steakshop/');
 include __DIR__ . '/bootstrap.php';
 
 // echo $adapterPattern;
-//die(SITE_URI);
+// die(SITE_URI);
 
 ?>
 
@@ -27,7 +27,7 @@ include __DIR__ . '/bootstrap.php';
     <link rel="stylesheet" href="<?php echo SITE_URI; ?>vendors/owl-carousel/owl.carousel.min.css">
     <link rel="stylesheet" href="<?php echo SITE_URI; ?>vendors/lightbox/simpleLightbox.css">
     <link rel="stylesheet" href="<?php echo SITE_URI; ?>vendors/nice-select/css/nice-select.css">
-    <link rel="stylesheet" href="<?php echo SITE_URI; ?>vendors/jquery-ui/jquery-ui.css">
+    <link rel="stylesheet" href="<?php echo SITE_URI; ?>vendors/jquery-ui/jquery-ui.css">L
     <link rel="stylesheet" href="<?php echo SITE_URI; ?>vendors/animate-css/animate.css">
     <!-- main css -->
     <link rel="stylesheet" href="<?php echo SITE_URI; ?>css/style.css">
@@ -116,6 +116,11 @@ include __DIR__ . '/bootstrap.php';
 
                 <div class="col-lg-12 posts-list">
                     <?php echo $designPatterns['builder']; ?>
+                </div>
+
+
+                <div class="col-lg-12 posts-list">
+                    <?php echo $designPatterns['observer']; ?>
                 </div>
 
                 <div class="col-lg-4" ></div>
