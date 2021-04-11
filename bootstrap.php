@@ -5,15 +5,18 @@
 
 $files = glob(__DIR__ . '/patterns/*.php');
 
+$filesContent   = [];
+$designPatterns = [];
+
 foreach ($files as $key => $filePath) {
+    $name = getFileName($filePath);
+    $filesContent[$name] = file($filePath);
     require $filePath;
 }
 
-// print_r($files); die();
+// lg($filesContent);
 
-$designPatterns = [];
-
-$designPatterns['adapter'] = renderPattern(function($args) {
+$designPatterns['adapter'] = renderPattern(function($args) use ($filesContent) {
 
     // Существующие сервисы
     $twitter  = new TwitterService();
@@ -28,24 +31,44 @@ $designPatterns['adapter'] = renderPattern(function($args) {
     $facebookSender   = new SocialServiceClientClass($facebook);
     $instagrammSender = new SocialServiceClientClass($adapterInstagramm);
 
-
-    echo '<br> Определение <br>
-
-          <br/> Привести нестандартный или неудобный интерфейс какого-то класса в интерфейс, совместимый с вашим кодом.
-          <br/> Адаптер позволяет классам работать вместе стандартным образом, что обычно не получается из-за несовместимых интерфейсов,
-          <br/> предоставляя для этого прослойку с интерфейсом, удобным для клиентов, самостоятельно используя оригинальный интерфейс.
-
-      <br><br>';
-
-
-    echo headerPage('Adapter Pattern (Start)');
-
     // Отправляем сообщения в сервисы
-    echo $twitterSender->newMessageSender('maikl-dzion'     , '1234'     , 'Привет сообщество!Как жизнь?');       echo "<br>";
-    echo $facebookSender->newMessageSender('fillip-maker'   , 'urty65756', 'Всем желаю доброго утра!!!');         echo "<br>";
-    echo "[InstagrammService имеет нестандартный интерфейс]" . $instagrammSender->newMessageSender('swide@mail.ru', 'gfhdggd'  , 'Продаю платяной шкаф (антиквариат)'); echo "<br>";
+    $result =  $twitterSender->newMessageSender('maikl-dzion'     , '1234'     , 'Привет сообщество!Как жизнь?') . "<br>";
+    $result .= $facebookSender->newMessageSender('fillip-maker'   , 'urty65756', 'Всем желаю доброго утра!!!');         echo "<br>";
+    $result .= "[InstagrammService имеет нестандартный интерфейс]" . $instagrammSender->newMessageSender('swide@mail.ru', 'gfhdggd'  , 'Продаю платяной шкаф (антиквариат)') . "<br>";
 
-    echo footerPage('Adapter Pattern (End)');
+    //echo footerPage('Adapter Pattern (End)');
+
+    unset($filesContent['adapter'][0]);
+    $fileContent = implode("", $filesContent['adapter']);
+
+    $desc = 'Привести нестандартный или неудобный интерфейс какого-то класса в интерфейс, совместимый с вашим кодом.
+             Адаптер позволяет классам работать вместе стандартным образом, что обычно не получается из-за несовместимых интерфейсов,
+             предоставляя для этого прослойку с интерфейсом, удобным для клиентов, самостоятельно используя оригинальный интерфейс.';
+
+    $clientCode = ' $twitter  = new TwitterService();
+                    $facebook = new FacebookService();
+                
+                    // Сервис который адаптируем
+                    $instagramm = new InstagrammService();
+                    $adapterInstagramm = new AdapterInstagrammService($instagramm);
+                
+                    // Создаем senders
+                    $twitterSender    = new SocialServiceClientClass($twitter);
+                    $facebookSender   = new SocialServiceClientClass($facebook);
+                    $instagrammSender = new SocialServiceClientClass($adapterInstagramm);';
+
+    $resultCode = $result;
+
+    ob_start();
+    include __DIR__ .'/jackson/section.php';
+    $section = ob_get_contents();
+    ob_end_clean();
+
+    $healthy = array("&_NAME_&", "&_DESC_&", "&_FILE-CONTENT_&", '&_CLIENT-CODE_&', '&_RESULT-CODE_&');
+    $yummy   = array("Adapter", $desc  , $fileContent    , $clientCode    , $resultCode);
+    $html = str_replace($healthy, $yummy, $section);
+
+    echo $html;
 
 }, []);
 
@@ -317,3 +340,14 @@ function headerPage($data)
     return $result;
 }
 
+function getFileName($path)
+{
+    $fileName = basename($path);
+    $name = explode('.', $fileName);
+    return $name[0];
+}
+
+
+function htmlSectionRender() {
+
+};

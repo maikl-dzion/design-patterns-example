@@ -5,7 +5,6 @@ interface HouseBuildInterface
     public function build();
 }
 
-
 // Типы домов
 class WoodenHouse implements HouseBuildInterface
 {
