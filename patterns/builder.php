@@ -127,74 +127,19 @@ class ComputerBuilder implements NewCompBuilderInterface {
 }
 
 
+function builderInit() {
+    $show = new ShowMessage('Пошаговая сборка компьютера', 'h4');
 
-//
-//class Burger
-//{
-//    protected $size;
-//    protected $cheese    = false;
-//    protected $pepperoni = false;
-//    protected $lettuce   = false;
-//    protected $tomato    = false;
-//
-//    public function __construct(BurgerBuilder $builder)
-//    {
-//        $this->size = $builder->size;
-//        $this->cheese = $builder->cheese;
-//        $this->pepperoni = $builder->pepperoni;
-//        $this->lettuce = $builder->lettuce;
-//        $this->tomato = $builder->tomato;
-//    }
-//}
-//
-//
-//class BurgerBuilder
-//{
-//    public $size;
-//    public $cheese    = false;
-//    public $pepperoni = false;
-//    public $lettuce   = false;
-//    public $tomato    = false;
-//
-//    public function __construct(int $size)
-//    {
-//        $this->size = $size;
-//    }
-//
-//    public function addPepperoni()
-//    {
-//        $this->pepperoni = true;
-//        return $this;
-//    }
-//
-//    public function addLettuce()
-//    {
-//        $this->lettuce = true;
-//        return $this;
-//    }
-//
-//    public function addCheese()
-//    {
-//        $this->cheese = true;
-//        return $this;
-//    }
-//
-//    public function addTomato()
-//    {
-//        $this->tomato = true;
-//        return $this;
-//    }
-//
-//    public function build(): Burger
-//    {
-//        return new Burger($this);
-//    }
-//}
+    $compBuilder = new ComputerBuilder();
+    $newComputer = $compBuilder->cpu('Core I5 [4356-rt-56]')
+                                ->system('Asus 567')
+                                ->_case('Inwin 450')
+                                ->power('500W')
+                                ->ram('Kingston 16Gb')
+                                ->gpu('Nvidia 660')
+                                ->hdd('WD 2Tb')
+                                ->get();
 
-
-//$burger = (new BurgerBuilder(14))
-//    ->addPepperoni()
-//    ->addLettuce()
-//    ->addTomato()
-//    ->build();
-
+    $show->message($newComputer->createOrder());
+    return $show->result();
+}

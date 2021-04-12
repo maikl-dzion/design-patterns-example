@@ -39,7 +39,6 @@ include __DIR__ . '/bootstrap.php';
 
     <script>
         var filesContent = [];
-        // filesContent = <?php echo json_encode($filesContent);?>
     </script>
 
     <style>
@@ -49,6 +48,23 @@ include __DIR__ . '/bootstrap.php';
             top: 0px;
             bottom: 0px;
             margin-left: 0px;
+        }
+
+        .item-container {
+            padding: 3px;
+            border-bottom: 1px gainsboro solid;
+        }
+
+        h3.item-container {
+           text-align: center;
+        }
+
+        div.item-container {
+
+        }
+
+        p.item-container {
+
         }
     </style>
 
@@ -78,14 +94,18 @@ include __DIR__ . '/bootstrap.php';
                 <div id="navbar" class="collapse">
                     <ul>
                         <li class="active"><a href="#" data-nav-section="home">Home</a></li>
-                        <li><a href="#" data-nav-section="about">About</a></li>
-                        <li><a href="#" data-nav-section="services">Services</a></li>
-                        <li><a href="#" data-nav-section="skills">Skills</a></li>
-                        <li><a href="#" data-nav-section="education">Education</a></li>
-                        <li><a href="#" data-nav-section="experience">Experience</a></li>
-                        <li><a href="#" data-nav-section="work">Work</a></li>
-                        <li><a href="#" data-nav-section="blog">Blog</a></li>
-                        <li><a href="#" data-nav-section="contact">Contact</a></li>
+                        <li><a href="#" data-nav-section="adapter"   >Adapter</a></li>
+                        <li><a href="#" data-nav-section="decorator" >Decorator</a></li>
+                        <li><a href="#" data-nav-section="command"   >Command</a></li>
+                        <li><a href="#" data-nav-section="strategy"  >strategy</a></li>
+                        <li><a href="#" data-nav-section="builder"   >builder</a></li>
+
+<!--                        <li><a href="#" data-nav-section="skills">Skills</a></li>-->
+<!--                        <li><a href="#" data-nav-section="education">Education</a></li>-->
+<!--                        <li><a href="#" data-nav-section="experience">Experience</a></li>-->
+<!--                        <li><a href="#" data-nav-section="work">Work</a></li>-->
+<!--                        <li><a href="#" data-nav-section="blog">Blog</a></li>-->
+<!--                        <li><a href="#" data-nav-section="contact">Contact</a></li>-->
                     </ul>
                 </div>
             </nav>
@@ -103,11 +123,52 @@ include __DIR__ . '/bootstrap.php';
 
         <div id="colorlib-main" style="border:1px gainsboro solid; width: 80%">
 
-            <section class="colorlib-services" data-section="services1">
+            <section class="colorlib-services" data-section="home">
+                <div class="colorlib-narrow-content">
+                    <div class="row" >
+                        <div class="col-md-12" >
+                            Паттерн (от англ. Pattern) — образец, шаблон.
+                            Представьте, что вы хотите сделать новый автомобиль, но вы никогда этим не занимались. Сколько колес и почему вы спроектируете для него? Сейчас вы уже скорее всего скажете что 4, однако почему не 3, 5, 10, 20?
+                            Потому-что практикой использования уже было выяснено, что обычные автомобили лучше всего делать на 4-х колесах — это шаблон проектирования сформированный временем.
+                            Именно такому же подходу и служат паттерны в ООП и вы не столкнетесь с ними в разработке до тех пор, пока вам не потребуется «сделать автомобиль».
+                            Однако иногда случается так, что вы создаете «трицикл», и только потом, набив несколько шишек с его устойчивость и неудачным вписыванием в колею на дороге,
+                            узнаете что существует паттерн «автомобиль», который значительно упростил бы вам жизнь, знай вы про него ранее.
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+
+            <section class="colorlib-services" data-section="adapter">
                 <div class="colorlib-narrow-content">
                     <div class="row" ><?php echo $designPatterns['adapter'];?></div>
                 </div>
             </section>
+
+            <section class="colorlib-services" data-section="decorator">
+                <div class="colorlib-narrow-content">
+                    <div class="row" ><?php echo $designPatterns['decorator'];?></div>
+                </div>
+            </section>
+
+            <section class="colorlib-services" data-section="command">
+                <div class="colorlib-narrow-content">
+                    <div class="row" ><?php echo $designPatterns['command'];?></div>
+                </div>
+            </section>
+
+            <section class="colorlib-services" data-section="strategy">
+                <div class="colorlib-narrow-content">
+                    <div class="row" ><?php echo $designPatterns['strategy'];?></div>
+                </div>
+            </section>
+
+            <section class="colorlib-services" data-section="builder">
+                <div class="colorlib-narrow-content">
+                    <div class="row" ><?php echo $designPatterns['builder'];?></div>
+                </div>
+            </section>
+
 
         </div><!-- end:colorlib-main -->
 
@@ -134,6 +195,7 @@ include __DIR__ . '/bootstrap.php';
             filesCode : filesContent,
         }
     })
+
 </script>
 
 </body>

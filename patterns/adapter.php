@@ -125,3 +125,35 @@ class SocialServiceClientClass {
     }
 
 }
+
+
+function adapterInit() {
+
+    // Существующие сервисы
+    $twitter  = new TwitterService();
+    $facebook = new FacebookService();
+
+    // Сервис который адаптируем
+    $instagramm = new InstagrammService();
+    $adapterInstagramm = new AdapterInstagrammService($instagramm);
+
+    // Создаем senders
+    $twitterSender    = new SocialServiceClientClass($twitter);
+    $facebookSender   = new SocialServiceClientClass($facebook);
+    $instagrammSender = new SocialServiceClientClass($adapterInstagramm);
+
+    // Отправляем сообщения в сервисы
+    $show = new ShowMessage('Отправляем сообщения в сервисы', 'h3');
+
+    $result = $twitterSender->newMessageSender('maikl-dzion'     , '1234'     , 'Привет сообщество!Как жизнь?');
+    $show->message($result);
+    $result = $facebookSender->newMessageSender('fillip-maker'   , 'urty65756', 'Всем желаю доброго утра!!!');
+    $show->message($result);
+    $show->message('InstagrammService имеет нестандартный интерфейс');
+    $result = $instagrammSender->newMessageSender('swide@mail.ru', 'gfhdggd'  , 'Продаю платяной шкаф (антиквариат)');
+    $show->message($result);
+    $html = $show->result();
+
+    return $html;
+}
+

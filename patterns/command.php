@@ -1,11 +1,9 @@
 <?php
 
-
 interface CommandServiceInterface {
     public function execute();
     public function cancel();
 }
-
 
 // Целевой класс
 class AirDefenseSystemControl {
@@ -143,3 +141,32 @@ class CommandServiceClientCode {
 
 }
 
+
+function commandInit() {
+    $show = new ShowMessage();
+
+    $airSystem = new AirDefenseSystemControl();
+
+    $command1 = new TargetTrackingCommand($airSystem);
+    $commandClientCode = new CommandServiceClientCode($command1);
+    $show->message('Выдана команда на отслеживание целей', 'h4');
+    $show->message($commandClientCode->start());
+
+    $command2 = new TargetQuidanceCommand($airSystem);
+    $commandClientCode = new CommandServiceClientCode($command2);
+    $show->message('Наводим на цель', 'h4');
+    $show->message($commandClientCode->start());
+
+
+    $command3 = new DestroyTargetgCommand($airSystem);
+    $commandClientCode = new CommandServiceClientCode($command3);
+    $show->message('Выдана команда на уничтожение цели', 'h4');
+    $show->message($commandClientCode->start());
+
+
+    $commandClientCode = new CommandServiceClientCode($command1);
+    $show->message('Выдана команда на отмену отслеживания целей', 'h4');
+    $show->message($commandClientCode->undo());
+
+    return $show->result();
+}

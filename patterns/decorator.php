@@ -123,3 +123,53 @@ class BookServiceClentCode {
 
 }
 
+
+function decoratorInit() {
+
+    $bookList = [
+        [
+            'name' => 'Я легенда',
+            'author' => 'Ричард Матесон',
+            'price' => 313,
+            'year'  => 2020,
+            'publish' => 'Азбука'
+        ],
+
+        [
+            'name' => 'Метро 2033',
+            'author' => 'Глуховский Дмитрий',
+            'price' => 704,
+            'year'  => 2019,
+            'publish' => 'АСТ'
+        ],
+
+        [
+            'name' => 'Град обреченный',
+            'author' => 'Стругацкий Аркадий',
+            'price' => 220,
+            'year'  => 2016,
+            'publish' => 'АСТ'
+        ],
+    ];
+
+
+    $show = new ShowMessage();
+
+    $bookSimple = new BookListSimple($bookList);
+    $bookServiceClient = new BookServiceClentCode($bookSimple);
+
+    $show->message('Простой список книг', 'h4');
+    $show->message($bookServiceClient->show());
+
+    $bookDecorator1 = new BookListAddPriceAndYearDecorator($bookSimple);
+    $bookServiceClient = new BookServiceClentCode($bookDecorator1);
+    $show->message('Оборачиваем простой список и добавляем цену и год', 'h4');
+    $show->message($bookServiceClient->show());
+
+    $bookDecorator2 = new BookListAddPublichDecorator($bookDecorator1);
+    $bookServiceClient = new BookServiceClentCode($bookDecorator2);
+    $show->message('Оборачиваем список и добавляем издательство', 'h4');
+    $show->message($bookServiceClient->show());
+
+    return $show->result();
+}

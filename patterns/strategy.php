@@ -57,3 +57,20 @@ class StrategySendMessageServiceClientCode {
         return $this->service->sendMail($message);
     }
 }
+
+
+function strategyInit() {
+    $show = new ShowMessage();
+
+    $simpleMail = new SimpleMailSender();
+    $mailSender = new StrategySendMessageServiceClientCode($simpleMail);
+    $show->message('Отправляем письмо через mail()', 'h4');
+    $show->message($mailSender->send('Добрый день,передаю документы по почте'));
+
+    $smtpMail = new SmtpMailSender();
+    $mailSender = new StrategySendMessageServiceClientCode($smtpMail);
+    $show->message('Отправляем письмо через SMTP-протокол', 'h4');
+    $show->message($mailSender->send('Привет,нужна помощь'));
+
+    return $show->result();
+}

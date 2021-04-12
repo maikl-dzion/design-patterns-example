@@ -18,188 +18,124 @@ foreach ($files as $key => $filePath) {
 
 $designPatterns['adapter'] = renderPattern(function($args) use ($filesContent) {
 
-    // Существующие сервисы
-    $twitter  = new TwitterService();
-    $facebook = new FacebookService();
+    $result = adapterInit();
 
-    // Сервис который адаптируем
-    $instagramm = new InstagrammService();
-    $adapterInstagramm = new AdapterInstagrammService($instagramm);
+    $title = 'adapter';
 
-    // Создаем senders
-    $twitterSender    = new SocialServiceClientClass($twitter);
-    $facebookSender   = new SocialServiceClientClass($facebook);
-    $instagrammSender = new SocialServiceClientClass($adapterInstagramm);
+    unset($filesContent[$title][0]);
+    $fileContent = implode("", $filesContent[$title]);
 
-    // Отправляем сообщения в сервисы
-    $result =  $twitterSender->newMessageSender('maikl-dzion'     , '1234'     , 'Привет сообщество!Как жизнь?') . "<br>";
-    $result .= $facebookSender->newMessageSender('fillip-maker'   , 'urty65756', 'Всем желаю доброго утра!!!');         echo "<br>";
-    $result .= "[InstagrammService имеет нестандартный интерфейс]" . $instagrammSender->newMessageSender('swide@mail.ru', 'gfhdggd'  , 'Продаю платяной шкаф (антиквариат)') . "<br>";
+    $description = "
+         Привести нестандартный или неудобный интерфейс какого-то класса в интерфейс, совместимый с вашим кодом.
+         Адаптер позволяет классам работать вместе стандартным образом, что обычно не получается из-за несовместимых интерфейсов,
+         предоставляя для этого прослойку с интерфейсом, удобным для клиентов, самостоятельно используя оригинальный интерфейс.
+    ";
 
-    //echo footerPage('Adapter Pattern (End)');
+    $clientCode = "";
 
-    unset($filesContent['adapter'][0]);
-    $fileContent = implode("", $filesContent['adapter']);
-
-    $desc = 'Привести нестандартный или неудобный интерфейс какого-то класса в интерфейс, совместимый с вашим кодом.
-             Адаптер позволяет классам работать вместе стандартным образом, что обычно не получается из-за несовместимых интерфейсов,
-             предоставляя для этого прослойку с интерфейсом, удобным для клиентов, самостоятельно используя оригинальный интерфейс.';
-
-    $clientCode = ' $twitter  = new TwitterService();
-                    $facebook = new FacebookService();
-                
-                    // Сервис который адаптируем
-                    $instagramm = new InstagrammService();
-                    $adapterInstagramm = new AdapterInstagrammService($instagramm);
-                
-                    // Создаем senders
-                    $twitterSender    = new SocialServiceClientClass($twitter);
-                    $facebookSender   = new SocialServiceClientClass($facebook);
-                    $instagrammSender = new SocialServiceClientClass($adapterInstagramm);';
-
-    $resultCode = $result;
-
-    ob_start();
-    include __DIR__ .'/jackson/section.php';
-    $section = ob_get_contents();
-    ob_end_clean();
-
-    $healthy = array("&_NAME_&", "&_DESC_&", "&_FILE-CONTENT_&", '&_CLIENT-CODE_&', '&_RESULT-CODE_&');
-    $yummy   = array("Adapter", $desc  , $fileContent    , $clientCode    , $resultCode);
-    $html = str_replace($healthy, $yummy, $section);
-
-    echo $html;
+    $replaceData = [$title, $description, $fileContent, $clientCode, $result];
+    $section     = htmlSectionReplace($replaceData);
+    echo $section;
 
 }, []);
 
 
-$designPatterns['decorator'] = renderPattern(function($args) {
+$designPatterns['decorator'] = renderPattern(function($args) use ($filesContent) {
 
-    $bookList = [
-        [
-            'name' => 'Я легенда',
-            'author' => 'Ричард Матесон',
-            'price' => 313,
-            'year'  => 2020,
-            'publish' => 'Азбука'
-        ],
+    $result = decoratorInit();
 
-        [
-            'name' => 'Метро 2033',
-            'author' => 'Глуховский Дмитрий',
-            'price' => 704,
-            'year'  => 2019,
-            'publish' => 'АСТ'
-        ],
+    $title = 'decorator';
 
-        [
-            'name' => 'Град обреченный',
-            'author' => 'Стругацкий Аркадий',
-            'price' => 220,
-            'year'  => 2016,
-            'publish' => 'АСТ'
-        ],
-    ];
+    unset($filesContent[$title][0]);
+    $fileContent = implode("", $filesContent[$title]);
 
+    $description = "
+         Декоратор — это структурный паттерн, который позволяет добавлять объектам новые поведения на лету, помещая их в объекты-обёртки.
+         Декоратор позволяет оборачивать объекты бесчисленное количество раз благодаря тому, что и обёртки,
+         и реальные оборачиваемые объекты имеют общий интерфейс.
+    ";
 
-    echo headerPage('Decorator (Start)');
+    $clientCode = "";
 
-    echo '<br> Определение <br>
-      <br/>  Декоратор — это структурный паттерн, который позволяет добавлять объектам новые поведения на лету, помещая их в объекты-обёртки.
-      <br/>  Декоратор позволяет оборачивать объекты бесчисленное количество раз благодаря тому, что и обёртки,
-      <br/>  и реальные оборачиваемые объекты имеют общий интерфейс. <br>';
-
-    $bookSimple = new BookListSimple($bookList);
-
-    $bookServiceClient = new BookServiceClentCode($bookSimple);
-    echo "<h4> Простой список книг </h4>";
-    echo $bookServiceClient->show(); echo "<br>";
-
-    $bookDecorator1 = new BookListAddPriceAndYearDecorator($bookSimple);
-    $bookServiceClient = new BookServiceClentCode($bookDecorator1);
-    echo "<h4> Оборачиваем простой список и добавляем цену и год </h4>";
-    echo $bookServiceClient->show(); echo "<br>";
-
-    $bookDecorator2 = new BookListAddPublichDecorator($bookDecorator1);
-    $bookServiceClient = new BookServiceClentCode($bookDecorator2);
-    echo "<h4> Оборачиваем список и добавляем издательство </h4>";
-    echo $bookServiceClient->show(); echo "<br>";
-
-    echo footerPage('Decorator (End)');
+    $replaceData = [$title, $description, $fileContent, $clientCode, $result];
+    $section     = htmlSectionReplace($replaceData);
+    echo $section;
 
 }, []);
 
 
-$designPatterns['command'] = renderPattern(function($args) {
+$designPatterns['command'] = renderPattern(function($args) use ($filesContent) {
 
-    echo headerPage('Command (Start)');
+    $result = commandInit();
 
-    echo '<br> Определение <br>
-         
-          <br><br>';
+    $title = 'command';
 
-    $airSystem = new AirDefenseSystemControl();
+    unset($filesContent[$title][0]);
+    $fileContent = implode("", $filesContent[$title]);
 
-    $command1 = new TargetTrackingCommand($airSystem);
-    $commandClientCode = new CommandServiceClientCode($command1);
-    echo "<h5> Выдана команда на отслеживание целей </h5>";
-    echo $commandClientCode->start(); echo "<br>";
+    $description = "
+        Команда (Command) относится к классу поведенческих паттернов. Команда представляет собой некоторое действие и его параметры. Суть паттерна в том, чтобы отделить инициатора и получателя команды.
+        Структура довольно простая. Dispatcher посылает сообщение (команду), при этом он не знает, кто эту команду получит. Это сообщение проходит через ConcreteCommand и попадает в Receiver. 
+        При этом Receiver не знает, от кого это сообщение пришло. Получается, что в этой диаграмме никто не обладает полными знаниями о том что происходит. 
+        Но этими знаниями обладает тот, кто подготовит всю эту цепочку для использования.
+    ";
 
-    $command2 = new TargetQuidanceCommand($airSystem);
-    $commandClientCode = new CommandServiceClientCode($command2);
-    echo "<h5> Наводим на цель </h5>";
-    echo $commandClientCode->start(); echo "<br>";
+    $clientCode = "";
 
-    $command3 = new DestroyTargetgCommand($airSystem);
-    $commandClientCode = new CommandServiceClientCode($command3);
-    echo "<h5> Выдана команда на уничтожение цели </h5>";
-    echo $commandClientCode->start(); echo "<br>";
-
-    $commandClientCode = new CommandServiceClientCode($command1);
-    echo "<h5> Выдана команда на отмену отслеживания целей </h5>";
-    echo $commandClientCode->undo(); echo "<br>";
-
-    echo footerPage('Command (End)');
+    $replaceData = [$title, $description, $fileContent, $clientCode, $result];
+    $section     = htmlSectionReplace($replaceData);
+    echo $section;
 
 }, []);
 
 
-$designPatterns['strategy'] = renderPattern(function($args) {
+$designPatterns['strategy'] = renderPattern(function($args) use ($filesContent) {
 
-    echo headerPage('Strategy (Start)');
+    $result = strategyInit();
 
-    echo '<br> Определение <br>
-         <br><br>';
+    $title = 'strategy';
 
-    $smtpMail = new SmtpMailSender();
-    $mailSender = new StrategySendMessageServiceClientCode($smtpMail);
-    echo "<br>" .$mailSender->send('Привет,нужна помощь');
+    unset($filesContent[$title][0]);
+    $fileContent = implode("", $filesContent[$title]);
 
-    $simpleMail = new SimpleMailSender();
-    $mailSender = new StrategySendMessageServiceClientCode($simpleMail);
-    echo "<br><br>" . $mailSender->send('Добрый день,передаю документы по почте');
+    $description = "
+        Стратегия — это поведенческий паттерн проектирования, который определяет семейство схожих алгоритмов и помещает каждый из них в собственный класс, 
+        после чего алгоритмы можно взаимозаменять прямо во время исполнения программы.
+        Чтобы разделить стратегии и получить возможность быстрого переключения между ними. 
+        Также этот паттерн является хорошей альтернативой наследованию (вместо расширения абстрактного класса).
+    ";
 
-    echo footerPage('Strategy (End)');
+    $clientCode = "";
+
+    $replaceData = [$title, $description, $fileContent, $clientCode, $result];
+    $section     = htmlSectionReplace($replaceData);
+    echo $section;
 
 }, []);
 
 
-$designPatterns['builder'] = renderPattern(function($args) {
-    echo headerPage('Builder (Start)');
+$designPatterns['builder'] = renderPattern(function($args) use ($filesContent) {
 
-    $compBuilder = new ComputerBuilder();
-    $newComputer = $compBuilder->cpu('Core I5 [4356-rt-56]')
-                               ->system('Asus 567')
-                               ->_case('Inwin 450')
-                               ->power('500W')
-                               ->ram('Kingston 16Gb')
-                               ->gpu('Nvidia 660')
-                               ->hdd('WD 2Tb')
-                               ->get();
+    $result = builderInit();
 
-    echo $newComputer->createOrder();
+    $title = 'builder';
 
-    echo footerPage('Builder (End)');
+    unset($filesContent[$title][0]);
+    $fileContent = implode("", $filesContent[$title]);
+
+    $description = "
+        Строитель — это порождающий паттерн проектирования, который позволяет создавать сложные объекты пошагово. 
+        Строитель даёт возможность использовать один и тот же код строительства для получения разных представлений объектов.
+        
+        Паттерн Строитель предлагает вынести конструирование объекта за пределы его собственного класса, поручив это дело отдельным объектам, называемым строителями.
+    ";
+
+    $clientCode = "";
+
+    $replaceData = [$title, $description, $fileContent, $clientCode, $result];
+    $section     = htmlSectionReplace($replaceData);
+    echo $section;
+
 }, []);
 
 
@@ -348,6 +284,59 @@ function getFileName($path)
 }
 
 
-function htmlSectionRender() {
+function htmlSectionReplace($replaceData)
+{
+
+    ob_start();
+    include __DIR__ .'/jackson/section.php';
+    $section = ob_get_contents();
+    ob_end_clean();
+    $replaceTemplate = array("&_NAME_&", "&_DESC_&", "&_FILE-CONTENT_&", '&_CLIENT-CODE_&', '&_RESULT-CODE_&');
+    $section = str_replace($replaceTemplate, $replaceData, $section);
+    return $section;
 
 };
+
+
+function showMessage($value, $tag = 'div', $class = 'result-container') {
+    $result = "
+       <$tag> class='$class' >$value</$tag>
+    ";
+    return $result;
+}
+
+
+class ShowMessage {
+
+    public $section = [];
+    public $tag;
+    public $class;
+
+    public function __construct($value = '', $tag = 'div', $class = 'item-container')
+    {
+        $this->tag   = $tag;
+        $this->class = $class;
+        if($value) $this->message($value, $tag, $class);
+    }
+
+    public function message($value, $tag = null, $class = null) {
+        $this->defaultStyle();
+        if(!$tag) $tag = $this->tag ;
+        if(!$class) $class = $this->class;
+        $result = "
+           <$tag class='$class' >$value</$tag>
+        ";
+        $this->section[] = $result;
+    }
+
+    public function result() {
+        $result = implode('', $this->section);
+        $this->section = [];
+        return $result;
+    }
+
+    public function defaultStyle() {
+        $this->tag   = 'div';
+        $this->class = 'item-container';
+    }
+}

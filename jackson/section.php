@@ -27,9 +27,7 @@
                     <div style="text-align: left;margin-bottom: 20px">&_CLIENT-CODE_&</div>
 
                     <h4 style="padding:0px; margin: 0px 0px 0px 0px">Результат</h4><hr>
-                     <p>
-                         &_RESULT-CODE_&
-                     </p>
+                     <p>&_RESULT-CODE_&</p>
                 </div>
             </div>
         </article>
