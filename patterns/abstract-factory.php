@@ -122,3 +122,23 @@ class AbstarctFactoryClientCode {
         return $expert->getExpert() . "<br>" .$house->build();
     }
 }
+
+
+
+function abstractFactoryInit() {
+
+    $show = new ShowMessage();
+
+    $woodenHouseFactory = new WoodenHouseFactory();
+    $houseBuild = new AbstarctFactoryClientCode($woodenHouseFactory);
+    $show->message('Создаем фабрику по постройке деревянного дома');
+    $show->message($houseBuild->run());
+
+
+    $brickHouseFactory = new BrickHouseFactory();
+    $houseBuild = new AbstarctFactoryClientCode($brickHouseFactory);
+    $show->message('Создаем фабрику по постройке кирпичного дома');
+    $show->message($houseBuild->run());
+
+    return $show->result();
+}

@@ -99,6 +99,9 @@ include __DIR__ . '/bootstrap.php';
                         <li><a href="#" data-nav-section="command"   >Command</a></li>
                         <li><a href="#" data-nav-section="strategy"  >strategy</a></li>
                         <li><a href="#" data-nav-section="builder"   >builder</a></li>
+                        <li><a href="#" data-nav-section="abstract-factory" >abstract-factory</a></li>
+                        <li><a href="#" data-nav-section="factory-method" >factory-method</a></li>
+                        <li><a href="#" data-nav-section="observer" >observer</a></li>
 
 <!--                        <li><a href="#" data-nav-section="skills">Skills</a></li>-->
 <!--                        <li><a href="#" data-nav-section="education">Education</a></li>-->
@@ -166,6 +169,24 @@ include __DIR__ . '/bootstrap.php';
             <section class="colorlib-services" data-section="builder">
                 <div class="colorlib-narrow-content">
                     <div class="row" ><?php echo $designPatterns['builder'];?></div>
+                </div>
+            </section>
+
+            <section class="colorlib-services" data-section="abstract-factory">
+                <div class="colorlib-narrow-content">
+                    <div class="row" ><?php echo $designPatterns['abstract-factory'];?></div>
+                </div>
+            </section>
+
+            <section class="colorlib-services" data-section="factory-method">
+                <div class="colorlib-narrow-content">
+                    <div class="row" ><?php echo $designPatterns['factory-method'];?></div>
+                </div>
+            </section>
+
+            <section class="colorlib-services" data-section="observer">
+                <div class="colorlib-narrow-content">
+                    <div class="row" ><?php echo $designPatterns['observer'];?></div>
                 </div>
             </section>
 

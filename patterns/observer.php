@@ -12,7 +12,6 @@ interface Observable
     public function attach(Observer $instance);
     public function detach(Observer $instance);
     public function notify();
-    public function getValue(string $fname);
 }
 
 
@@ -58,7 +57,7 @@ class UserUpdatedSubject implements Observable
     }
 
     private function getMessage($message) {
-        echo "<br><br>" . __CLASS__ . ' : ' . $message . "<br><br>";
+        echo "<div>" . __CLASS__ . ' : ' . $message . "</div>";
     }
 }
 
@@ -66,7 +65,7 @@ class UserUpdatedSubject implements Observable
 class StoreDepartment implements Observer
 {
     private function getMessage($message) {
-        echo "<br><br>" . __CLASS__ . ' : ' . $message . "<br><br>";
+        echo "<div>" . __CLASS__ . ' : ' . $message . "</div>";
     }
 
     public function update(Observable $subject) {
@@ -79,7 +78,7 @@ class StoreDepartment implements Observer
 class FinancialDepartment implements Observer
 {
     private function getMessage($message) {
-        echo "<br><br>" . __CLASS__ . ' : ' . $message . "<br><br>";
+        echo "<div>" . __CLASS__ . ' : ' . $message . "</div>";
     }
 
     public function update(Observable $subject) {
@@ -87,4 +86,32 @@ class FinancialDepartment implements Observer
         $message = "Пользователю $userName заказа дебетовая карта в банке 'BTБ'";
         $this->getMessage($message);
     }
+}
+
+
+function observerInit() {
+
+    $newUser = [
+        "username"  => "John Smith",
+        "email" => "john99@example.com",
+    ];
+
+    ob_start();
+    // Генератор новых событий
+    $userUpdated = new UserUpdatedSubject();
+
+    // Наблюдатели
+    $store       = new StoreDepartment();
+    $finance     = new FinancialDepartment();
+
+    $userUpdated->attach($store);
+    $userUpdated->attach($finance);
+    $userUpdated->create($newUser);
+
+    $resultHtml = ob_get_contents();
+    ob_end_clean();
+
+    // $show = new ShowMessage();
+    // return $show->result($result);
+    return $resultHtml;
 }

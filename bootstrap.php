@@ -126,7 +126,6 @@ $designPatterns['builder'] = renderPattern(function($args) use ($filesContent) {
     $description = "
         Строитель — это порождающий паттерн проектирования, который позволяет создавать сложные объекты пошагово. 
         Строитель даёт возможность использовать один и тот же код строительства для получения разных представлений объектов.
-        
         Паттерн Строитель предлагает вынести конструирование объекта за пределы его собственного класса, поручив это дело отдельным объектам, называемым строителями.
     ";
 
@@ -139,72 +138,68 @@ $designPatterns['builder'] = renderPattern(function($args) use ($filesContent) {
 }, []);
 
 
-$designPatterns['abstract-factory'] = renderPattern(function($args) {
-    echo headerPage('AbstractFactory (Start)');
+$designPatterns['abstract-factory'] = renderPattern(function($args) use ($filesContent) {
 
-    echo '<br> Определение <br>
-          <br><br>';
+    $result = abstractFactoryInit();
 
-    $woodenHouseFactory = new WoodenHouseFactory();
-    $houseBuild = new AbstarctFactoryClientCode($woodenHouseFactory);
-    echo $houseBuild->run();
-    echo "<br><br>";
+    $title = 'abstract-factory';
 
-    $brickHouseFactory = new BrickHouseFactory();
-    $houseBuild = new AbstarctFactoryClientCode($brickHouseFactory);
-    echo $houseBuild->run();
-    echo "<br><br>";
+    unset($filesContent[$title][0]);
+    $fileContent = implode("", $filesContent[$title]);
 
-    echo footerPage('AbstractFactory (End)');
+    $description = "
+        
+    ";
+
+    $clientCode = "";
+
+    $replaceData = [$title, $description, $fileContent, $clientCode, $result];
+    $section     = htmlSectionReplace($replaceData);
+    echo $section;
+
 }, []);
 
 
-$designPatterns['factory-method'] = renderPattern(function($args) {
-    echo headerPage('FactoryMethod (Start)');
+$designPatterns['factory-method'] = renderPattern(function($args) use ($filesContent) {
 
-    echo '<br> Определение <br>
-          <br><br>';
 
-    $truckerTransport = new TruckerLogisticFactoryMethod();
-    $clientLogistic   = new FactoryLogisticClientCode($truckerTransport);
-    echo "<br>" . implode("<br>", $clientLogistic->run());
+    $result = factoryMethodInit();
 
-    echo "<br><br>";
+    $title = 'factory-method';
 
-    $smallTransport = new SmallTransportLogisticFactoryMethod();
-    $clientLogistic = new FactoryLogisticClientCode($smallTransport);
-    echo "<br>" . implode("<br>", $clientLogistic->run());
+    unset($filesContent[$title][0]);
+    $fileContent = implode("", $filesContent[$title]);
 
-    echo footerPage('FactoryMethod (End)');
+    $description = "
+        
+    ";
+
+    $clientCode = "";
+
+    $replaceData = [$title, $description, $fileContent, $clientCode, $result];
+    $section     = htmlSectionReplace($replaceData);
+    echo $section;
+
 }, []);
 
 
+$designPatterns['observer'] = renderPattern(function($args) use ($filesContent) {
 
-$designPatterns['observer'] = renderPattern(function($args) {
+    $result = observerInit();
+    $title  = 'observer';
 
-    echo headerPage('Observer (Start)');
+    unset($filesContent[$title][0]);
+    $fileContent = implode("", $filesContent[$title]);
 
-    echo '<br> Определение <br>
-          <br><br>';
+    $description = "
+        
+    ";
 
-    $newUser = [
-        "username"  => "John Smith",
-        "email" => "john99@example.com",
-    ];
+    $clientCode = "";
+    $replaceData = [$title, $description, $fileContent, $clientCode, $result];
+    $section     = htmlSectionReplace($replaceData);
+    echo $section;
 
-    // Генератор новых событий
-    $userUpdated = new UserUpdatedSubject();
-
-    // Наблюдатели
-    $store       = new StoreDepartment();
-    $finance     = new FinancialDepartment();
-
-    $userUpdated->attach($store);
-    $userUpdated->attach($finance);
-
-    $userUpdated->create($newUser);
-
-    echo footerPage('Observer (End)');
 }, []);
 
 

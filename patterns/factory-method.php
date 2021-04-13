@@ -113,3 +113,22 @@ class FactoryLogisticClientCode {
         return $this->service->deliveryCargo();
     }
 }
+
+
+function factoryMethodInit() {
+
+    $show = new ShowMessage();
+
+    $truckerTransport = new TruckerLogisticFactoryMethod();
+    $clientLogistic   = new FactoryLogisticClientCode($truckerTransport);
+    // $show->message('Создаем фабрику по постройке деревянного дома');
+    $show->message(implode("<br>", $clientLogistic->run()));
+
+    $smallTransport = new SmallTransportLogisticFactoryMethod();
+    $clientLogistic = new FactoryLogisticClientCode($smallTransport);
+
+    // $show->message('Создаем фабрику по постройке деревянного дома');
+    $show->message(implode("<br>", $clientLogistic->run()));
+
+    return $show->result();
+}
